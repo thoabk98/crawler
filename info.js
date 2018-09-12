@@ -1,10 +1,8 @@
 const db = require('./dbconnect')
-const rq = require('request')
-const cheerio = require('cheerio')
 const puppeteer = require('puppeteer');
-
+const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 const getinfo = async(link) => {
-
+    await delay(5000);
     return new Promise(async(res, rej) => {
         const browser = await puppeteer.launch();
         const page = await browser.newPage();
@@ -19,14 +17,12 @@ const getinfo = async(link) => {
         });
         await browser.close();
 
-        console.log(td);
         db("doanhnghiep").insert(td)
             .then(id => {
+                console.log(id)
                 res(id)
             })
-
     })
-
 }
 
 module.exports = getinfo;

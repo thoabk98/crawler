@@ -1,12 +1,26 @@
 const GetLink = require('./link')
 const GetInfo = require('./info')
-const link = "https://doanhnghiepmoi.vn/Ha-Noi/page-1/";
+const link = "https://doanhnghiepmoi.vn/Ha-Noi/";
+const curr = 1;
+const next = (i) => {
+    if (i < 9235) page(link, i, next)
+}
+const page = async(link, curr, callback) => {
+    const pagelink = link + "page-" + curr + "/";
+    const links = await GetLink(pagelink);
+    const delay = () => { return new Promise(res => setTimeout(res, 5000)) }
+    const delayItem = async(item) => {
+        await delay();
+        await GetInfo(item);
+    };
+    const arr = async(arr) => {
+        for (let item of arr) {
+            await delayItem(item);
+        }
+        callback(++curr);
+        console.log("Done!");
+    }
+    arr(links)
 
-(async() => {
-    const links = await GetLink(link);
-    links.forEach(async(item) => {
-        console.log(item)
-            // const info = await GetInfo(item);
-    });
-
-})();
+}
+page(link, curr, next);
