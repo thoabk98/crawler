@@ -1,9 +1,9 @@
 const GetLink = require('./link')
 const GetInfo = require('./info')
 const link = "https://doanhnghiepmoi.vn/Ha-Noi/";
-const curr = 1;
+const curr = 44;
 const next = (i) => {
-    if (i < 9235) page(link, i, next)
+    if (i < 3) page(link, i, next)
 }
 const page = async(link, curr, callback) => {
     const pagelink = link + "page-" + curr + "/";

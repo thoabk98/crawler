@@ -1,13 +1,11 @@
-const delay = () => { return new Promise(res => setTimeout(res, 5000)) }
-const delayItem = async(item) => {
-    await delay();
-    console.log(item);
-}
-const arr = async(arr) => {
-    for (let item of arr) {
-        await delayItem(item);
+const puppeteer = require('puppeteer');
 
-    }
-    console.log("Done!");
-}
-arr([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+(async() => {
+    const browser = await puppeteer.launch({ headless: false });
+    const page = await browser.newPage();
+    page.setViewport({ width: 1280, height: 720 });
+    await page.goto('https://www.anjsub.com/p/watch-devilman-crybaby.html', { waitUntil: 'networkidle2' });
+
+
+    await browser.close();
+})();
